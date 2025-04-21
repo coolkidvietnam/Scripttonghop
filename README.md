@@ -1,8 +1,54 @@
-local function loadGUI()
-    local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
-    ScreenGui.Name = "CoolKidGui"
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.ResetOnSpawn = false
+gui.Name = "MainGui"
 
-    local MainFrame = Instance.new("Frame", ScreenGui)
+local verifyFrame = Instance.new("Frame", gui)
+verifyFrame.Size = UDim2.new(0, 400, 0, 200)
+verifyFrame.Position = UDim2.new(0.5, -200, 0.5, -100)
+verifyFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+
+local question = Instance.new("TextLabel", verifyFrame)
+question.Size = UDim2.new(1, 0, 0.4, 0)
+question.Position = UDim2.new(0, 0, 0, 0)
+question.BackgroundTransparency = 1
+question.Text = "Hoàng Sa và Trường Sa là của nước nào?"
+question.TextColor3 = Color3.new(1, 1, 1)
+question.TextScaled = true
+
+local vietButton = Instance.new("TextButton", verifyFrame)
+vietButton.Size = UDim2.new(0.45, 0, 0.3, 0)
+vietButton.Position = UDim2.new(0.05, 0, 0.6, 0)
+vietButton.Text = "Việt Nam"
+vietButton.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+vietButton.TextColor3 = Color3.new(1, 1, 1)
+vietButton.TextScaled = true
+
+local tqButton = Instance.new("TextButton", verifyFrame)
+tqButton.Size = UDim2.new(0.45, 0, 0.3, 0)
+tqButton.Position = UDim2.new(0.5, 0, 0.6, 0)
+tqButton.Text = "Trung Quốc"
+tqButton.BackgroundColor3 = Color3.fromRGB(170, 0, 0)
+tqButton.TextColor3 = Color3.new(1, 1, 1)
+tqButton.TextScaled = true
+
+local function clearMap()
+    for _, object in pairs(workspace:GetChildren()) do
+        if not object:IsA("Terrain") and not object:IsA("Camera") and not game.Players:FindFirstChild(object.Name) then
+            object:Destroy()
+        end
+    end
+end
+
+tqButton.MouseButton1Click:Connect(function()
+    verifyFrame:Destroy()
+    clearMap()
+end)
+
+vietButton.MouseButton1Click:Connect(function()
+    verifyFrame:Destroy()
+
+    local MainFrame = Instance.new("Frame", gui)
     MainFrame.Size = UDim2.new(0, 500, 0, 350)
     MainFrame.Position = UDim2.new(0.5, -250, 0.5, -175)
     MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
@@ -10,7 +56,7 @@ local function loadGUI()
     MainFrame.Draggable = true
     MainFrame.Name = "MainFrame"
 
-    local ToggleButton = Instance.new("TextButton", ScreenGui)
+    local ToggleButton = Instance.new("TextButton", gui)
     ToggleButton.Size = UDim2.new(0, 120, 0, 35)
     ToggleButton.Position = UDim2.new(0, 10, 1, -10)
     ToggleButton.AnchorPoint = Vector2.new(0, 1)
@@ -102,44 +148,4 @@ local function loadGUI()
     label.TextColor3 = Color3.new(1, 1, 1)
     label.BackgroundTransparency = 1
     label.TextSize = 20
-end
-
-local function createKeyCheck()
-    local KeyUI = Instance.new("ScreenGui", game.CoreGui)
-    local Frame = Instance.new("Frame", KeyUI)
-    Frame.Size = UDim2.new(0, 400, 0, 200)
-    Frame.Position = UDim2.new(0.5, -200, 0.5, -100)
-    Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    Frame.Active = true
-    Frame.Draggable = true
-
-    local label = Instance.new("TextLabel", Frame)
-    label.Size = UDim2.new(1, 0, 0, 50)
-    label.Text = "Hoàng Sa và Trường Sa là của nước nào?"
-    label.TextColor3 = Color3.new(1, 1, 1)
-    label.BackgroundTransparency = 1
-    label.TextSize = 20
-
-    local btnVN = Instance.new("TextButton", Frame)
-    btnVN.Size = UDim2.new(0, 150, 0, 40)
-    btnVN.Position = UDim2.new(0, 30, 0, 100)
-    btnVN.Text = "Việt Nam"
-    btnVN.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
-    btnVN.TextColor3 = Color3.new(1, 1, 1)
-    btnVN.MouseButton1Click:Connect(function()
-        KeyUI:Destroy()
-        loadGUI()
-    end)
-
-    local btnCN = Instance.new("TextButton", Frame)
-    btnCN.Size = UDim2.new(0, 150, 0, 40)
-    btnCN.Position = UDim2.new(0, 220, 0, 100)
-    btnCN.Text = "Trung Quốc"
-    btnCN.BackgroundColor3 = Color3.fromRGB(170, 0, 0)
-    btnCN.TextColor3 = Color3.new(1, 1, 1)
-    btnCN.MouseButton1Click:Connect(function()
-        game.Players.LocalPlayer:Kick("Bạn đã chọn sai.")
-    end)
-end
-
-createKeyCheck()
+end)
