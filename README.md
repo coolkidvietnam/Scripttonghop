@@ -121,11 +121,11 @@ function loadMainGUI()
     UIGrid.CellPadding = UDim2.new(0, 10, 0, 10)
 
     createButton(tab1, "Fly", function()
-        loadstring(game:HttpGet("https://pastebin.com/raw/U27yQRxS"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/coolkidvietnam/coolkidvietnam/refs/heads/main/Script%20cool%20kid"))()
     end)
 
     createButton(tab1, "VFly", function()
-        loadstring(game:HttpGet("https://pastebin.com/raw/SzX6kBzr"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Vehicle%20Fly%20Gui"))()
     end)
 
     createButton(tab1, "Tốc độ 16", function()
