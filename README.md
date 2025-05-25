@@ -151,7 +151,7 @@ function loadMainGUI()
     btnSR.Position = UDim2.new(0, 20, 0, 20)
     btnSR.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
     btnSR.TextColor3 = Color3.new(1,1,1)
-    btnSR.Text = "Super Ring VN"
+    btnSR.Text = "Super Ring VN bị lỗi"
     btnSR.Font = Enum.Font.SourceSansBold
     btnSR.TextScaled = true
     btnSR.MouseButton1Click:Connect(function()
