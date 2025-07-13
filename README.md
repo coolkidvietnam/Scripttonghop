@@ -50,7 +50,6 @@ local function verifyQuestion()
     end)
 end
 
--- Giao diện chính
 function loadMainGUI()
     local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
     ScreenGui.Name = "VN_GUI"
@@ -63,7 +62,6 @@ function loadMainGUI()
 
     local Tabs = Instance.new("Folder", MainFrame)
 
-    -- Tab Buttons
     local TabButtonFrame = Instance.new("Frame", MainFrame)
     TabButtonFrame.Size = UDim2.new(1, 0, 0, 40)
     TabButtonFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
@@ -102,7 +100,6 @@ function loadMainGUI()
         return tabFrame
     end
 
-    -- Tab 1: Menu Chính
     local tab1 = createTab("Menu Chính")
 
     local function createButton(parent, name, callback)
@@ -144,8 +141,41 @@ function loadMainGUI()
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 75
     end)
 
+    -- ✅ Nút Noclip
+    local noclipEnabled = false
+    local noclipConnection
+    createButton(tab1, "Noclip Bật/Tắt", function()
+        noclipEnabled = not noclipEnabled
+        if noclipEnabled then
+            noclipConnection = game:GetService("RunService").Stepped:Connect(function()
+                local char = game.Players.LocalPlayer.Character
+                if char then
+                    for _, part in pairs(char:GetDescendants()) do
+                        if part:IsA("BasePart") then
+                            part.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        else
+            if noclipConnection then
+                noclipConnection:Disconnect()
+                noclipConnection = nil
+            end
+            local char = game.Players.LocalPlayer.Character
+            if char then
+                for _, part in pairs(char:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = true
+                    end
+                end
+            end
+        end
+    end)
+
     -- Tab 2: Troll
     local tab2 = createTab("Troll")
+
     local btnSR = Instance.new("TextButton", tab2)
     btnSR.Size = UDim2.new(0, 200, 0, 50)
     btnSR.Position = UDim2.new(0, 20, 0, 20)
@@ -158,7 +188,6 @@ function loadMainGUI()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/coolkidvietnam/Super-ring-vn/refs/heads/main/Super%20ring%20vn"))()
     end)
 
-    -- Button Goon
     local btnGoon = Instance.new("TextButton", tab2)
     btnGoon.Size = UDim2.new(0, 200, 0, 50)
     btnGoon.Position = UDim2.new(0, 20, 0, 80)
@@ -169,6 +198,30 @@ function loadMainGUI()
     btnGoon.TextScaled = true
     btnGoon.MouseButton1Click:Connect(function()
         loadstring(game:HttpGet("https://pastefy.app/wa3v2Vgm/raw"))("Spider Script")
+    end)
+
+    local btnInvisible = Instance.new("TextButton", tab2)
+    btnInvisible.Size = UDim2.new(0, 200, 0, 50)
+    btnInvisible.Position = UDim2.new(0, 20, 0, 140)
+    btnInvisible.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    btnInvisible.TextColor3 = Color3.new(1,1,1)
+    btnInvisible.Text = "Tàng hình"
+    btnInvisible.Font = Enum.Font.SourceSansBold
+    btnInvisible.TextScaled = true
+    btnInvisible.MouseButton1Click:Connect(function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-20557"))()
+    end)
+
+    local btnLonely = Instance.new("TextButton", tab2)
+    btnLonely.Size = UDim2.new(0, 200, 0, 50)
+    btnLonely.Position = UDim2.new(0, 20, 0, 200)
+    btnLonely.BackgroundColor3 = Color3.fromRGB(100, 0, 100)
+    btnLonely.TextColor3 = Color3.new(1,1,1)
+    btnLonely.Text = "Lonely Lonely"
+    btnLonely.Font = Enum.Font.SourceSansBold
+    btnLonely.TextScaled = true
+    btnLonely.MouseButton1Click:Connect(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/gObl00x/My-Scripts/refs/heads/main/Epik%20R6%20Dancezz"))()
     end)
 
     -- Tab 3: Người tạo script
@@ -189,7 +242,6 @@ function loadMainGUI()
     TikTok.Font = Enum.Font.SourceSansBold
     TikTok.TextScaled = true
 
-    -- Hiện/Ẩn GUI
     local toggle = Instance.new("TextButton", ScreenGui)
     toggle.Size = UDim2.new(0, 120, 0, 30)
     toggle.Position = UDim2.new(0, 10, 1, -40)
@@ -203,7 +255,6 @@ function loadMainGUI()
         MainFrame.Visible = not MainFrame.Visible
     end)
 
-    -- Mặc định bật Tab 1
     TabsTable["Menu Chính"].Visible = true
 end
 
