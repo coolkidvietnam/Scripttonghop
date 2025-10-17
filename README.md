@@ -53,6 +53,12 @@ Tab:CreateButton({
    end
 })
 Tab:CreateButton({
+   Name = "Quay ngược thời gian",
+   Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/0Ben1/fe./main/L"))()
+   end
+})
+Tab:CreateButton({
    Name = "đừng nhấn",
    Callback = function()
        loadstring(game:HttpGet("https://raw.githubusercontent.com/TheqopThe/robax/refs/heads/main/jumpscare.lua"))()
