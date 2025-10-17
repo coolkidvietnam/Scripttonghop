@@ -20,7 +20,7 @@ Tab:CreateButton({
 })
 Tab:CreateSlider({
    Name = "Tốc độ chạy",
-   Range = {1, 200},
+   Range = {16, 200},
    Increment = 1,
    Suffix = "WalkSpeed",
    CurrentValue = 16,
