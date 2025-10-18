@@ -1,8 +1,8 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-   Name = "CoolKid GUI 🇻🇳",
-   LoadingTitle = "CoolKid Việt Nam",
-   LoadingSubtitle = "By trn.minh.tr0089",
+   Name = "sigma GUI 🇻🇳",
+   LoadingTitle = "sigma Việt Nam",
+   LoadingSubtitle = "By skibidhecker",
    ConfigurationSaving = {Enabled = false}
 })
 local Tab = Window:CreateTab("Menu Chính", 4483362458)
@@ -18,19 +18,19 @@ Tab:CreateButton({
        loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Vehicle%20Fly%20Gui"))()
    end
 })
-Tab:CreateSlider({
-   Name = "Tốc độ chạy",
-   Range = {16, 200},
-   Increment = 1,
-   Suffix = "WalkSpeed",
-   CurrentValue = 16,
-   Flag = "SpeedSlider",
+Tab:CreateInput({
+   Name = "speed",
+   PlaceholderText = "......",
+   RemoveTextAfterFocusLost = false,
    Callback = function(value)
-       local plr = game.Players.LocalPlayer
-       local chr = plr.Character or plr.CharacterAdded:Wait()
-       local hum = chr:FindFirstChildOfClass("Humanoid")
-       if hum then
-           hum.WalkSpeed = value
+       local speed = tonumber(value)
+       if speed then
+           local plr = game.Players.LocalPlayer
+           local chr = plr.Character or plr.CharacterAdded:Wait()
+           local hum = chr:FindFirstChildOfClass("Humanoid")
+           if hum then
+               hum.WalkSpeed = speed
+           end
        end
    end
 })
