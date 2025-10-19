@@ -1,4 +1,4 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+      local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
    Name = "sigma GUI 🇻🇳",
    LoadingTitle = "sigma Việt Nam",
@@ -20,18 +20,31 @@ Tab1:CreateButton({
    end
 })
 Tab1:CreateInput({
-   Name = "Nhập tốc độ chạy",
+   Name = "Nhập tốc độ chạy (vĩnh viễn)",
    PlaceholderText = "Ví dụ: 50",
    RemoveTextAfterFocusLost = false,
    Callback = function(value)
        local speed = tonumber(value)
        if speed then
-           local plr = game.Players.LocalPlayer
-           local chr = plr.Character or plr.CharacterAdded:Wait()
-           local hum = chr:FindFirstChildOfClass("Humanoid")
-           if hum then
-               hum.WalkSpeed = speed
+           local Players = game:GetService("Players")
+           local plr = Players.LocalPlayer
+           local function setSpeed()
+               local char = plr.Character
+               if char then
+                   local hum = char:FindFirstChildOfClass("Humanoid")
+                   if hum then
+                       hum.WalkSpeed = speed
+                       hum:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+                           hum.WalkSpeed = speed
+                       end)
+                   end
+               end
            end
+           setSpeed()
+           plr.CharacterAdded:Connect(function()
+               repeat task.wait() until plr.Character:FindFirstChildOfClass("Humanoid")
+               setSpeed()
+           end)
        end
    end
 })
@@ -135,7 +148,7 @@ Tab2:CreateButton({
            if countInBackpack() > before then success = true end
        end) end
        if success then
-           notify("Dupe", "Thử dupe: Có khả năng thành công. Kiểm tra Backpack.", 4)
+           notify("Dupe", "Đã thử dupe, kiểm tra Backpack.", 4)
        else
            notify("Dupe", "Không thể dupe trong game này.", 4)
        end
